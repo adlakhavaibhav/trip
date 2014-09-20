@@ -19,12 +19,10 @@ import java.util.Set;
  * Time: 11:48 PM
  */
 
- @Entity
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"login", "store_id"}))
+@Entity
+@Table(name = "user")
 @NamedQueries({
     @NamedQuery(name = "findUserByEmail", query = "from User u where u.email = :email"),
-    @NamedQuery(name = "findUserByLogin", query = "from User u where u.login = :login"),
-    @NamedQuery(name = "findUserByLoginAndStore", query = "from User u where u.login = :login and u.storeId = :storeId"),
     @NamedQuery(name = "findByUserEmailAndPassword", query = "from User u where u.email = :email and u.passwordChecksum = :passwordEncrypted"),
     @NamedQuery(name = "findUserById", query = "from User u where u.id = :userId ")})
 public class User extends JSONObject implements Serializable {
@@ -34,21 +32,29 @@ public class User extends JSONObject implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(name = "login", nullable = false, length = 80)
-  private String login;
+  @Column(name = "fname", nullable = false, length = 80)
+  private String fname;
+
+  @Column(name = "lname", length = 80)
+  private String lname;
+
+
+  @Column(name = "user_hash", nullable = false, length = 32, unique = true)
+  private String userHash;
+
 
   @Column(name = "email", nullable = true, length = 80)
   private String email;
 
-  @Column(name = "name", nullable = true, length = 80)
-  private String name;
 
   @Column(name = "password_checksum", nullable = false)
   private String passwordChecksum;
+/*
 
   @Temporal(TemporalType.DATE)
   @Column(name = "birth_date", nullable = true, length = 19)
   private Date birthDate;
+*/
 
   @Column(name = "gender", nullable = true, length = 6)
   private String gender;
@@ -57,8 +63,6 @@ public class User extends JSONObject implements Serializable {
   @Column(name = "last_login_date", nullable = false, length = 19)
   private Date lastLoginDate;
 
-  @Column(name = "badge_id")
-  private Long badgeId;
 
   @ManyToMany(fetch = FetchType.EAGER)
   @Fetch(value = FetchMode.SELECT)
@@ -68,12 +72,8 @@ public class User extends JSONObject implements Serializable {
       inverseJoinColumns = @JoinColumn(name = "role_name", referencedColumnName = "name"))
   private Set<Role> roles = new HashSet<Role>(0);
 
-  @Column(name = "user_hash", nullable = false, length = 32, unique = true)
-  private String userHash;
-
-  @Column(name = "store_id", nullable = false)
-  private Long storeId;
-
+  @Column(name = "create_dt", nullable = false)
+  private Date createDt = new Date();
 
   public Long getId() {
     return id;
@@ -83,13 +83,6 @@ public class User extends JSONObject implements Serializable {
     this.id = id;
   }
 
-  public String getLogin() {
-    return this.login;
-  }
-
-  public void setLogin(String login) {
-    this.login = login;
-  }
 
   public String getEmail() {
     return email;
@@ -123,22 +116,6 @@ public class User extends JSONObject implements Serializable {
     this.passwordChecksum = passwordChecksum;
   }
 
-  public Long getBadgeId() {
-    return badgeId;
-  }
-
-  public void setBadgeId(Long badgeId) {
-    this.badgeId = badgeId;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public String toString() {
     return id == null ? "" : id.toString();
   }
@@ -151,36 +128,12 @@ public class User extends JSONObject implements Serializable {
     this.lastLoginDate = lastLoginDate;
   }
 
-  public String getUserHash() {
-    return userHash;
-  }
-
-  public void setUserHash(String userHash) {
-    this.userHash = userHash;
-  }
-
-  public Date getBirthDate() {
-    return birthDate;
-  }
-
-  public void setBirthDate(Date birthDate) {
-    this.birthDate = birthDate;
-  }
-
   public String getGender() {
     return gender;
   }
 
   public void setGender(String gender) {
     this.gender = gender;
-  }
-
-  public Long getStoreId() {
-    return storeId;
-  }
-
-  public void setStoreId(Long storeId) {
-    this.storeId = storeId;
   }
 
 
@@ -193,30 +146,53 @@ public class User extends JSONObject implements Serializable {
     if (o instanceof User) {
       User user = (User) o;
       return new EqualsBuilder()
-          .append(this.login, user.getLogin())
-          .append(this.storeId, user.getStoreId())
+          .append(this.email, user.getEmail())
+
           .isEquals();
     }
 
     return false;
   }
 
+  public String getFname() {
+    return fname;
+  }
+
+  public void setFname(String fname) {
+    this.fname = fname;
+  }
+
+  public String getLname() {
+    return lname;
+  }
+
+  public void setLname(String lname) {
+    this.lname = lname;
+  }
+
+  public String getUserHash() {
+    return userHash;
+  }
+
+  public void setUserHash(String userHash) {
+    this.userHash = userHash;
+  }
+
   @Override
   public int hashCode() {
     return new HashCodeBuilder()
-        .append(this.login)
-        .append(this.storeId)
+        .append(this.email)
         .toHashCode();
   }
 
   @Override
   protected String[] getKeys() {
-    return new String[]{"id", "login", "email", "name"};
+    return new String[]{"id", "email", "fname"};
   }
 
   @Override
   protected Object[] getValues() {
-    return new Object[]{this.id, this.login, this.email != null ? this.email : "", this.name != null ? this.name : ""};
+    return new Object[]{this.id, this.email, this.fname};
   }
 }
 

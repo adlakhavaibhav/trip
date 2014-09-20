@@ -38,7 +38,6 @@
         <copy todir="${project.dist.dir}/WEB-INF">
             <fileset dir="${project.resources.dir}/${project.env}/logging"/>
         </copy>
-
         <copy todir="${project.dist.dir}/WEB-INF/lib">
             <fileset dir="${lib.commons.root}">
                 <include name="*.jar"/>
@@ -84,6 +83,38 @@
                 <include name="*.jar"/>
             </fileset>
         </copy>
+        <copy todir="${project.dist.dir}/WEB-INF/lib">
+            <fileset dir="${lib.http.root}">
+                <include name="*.jar"/>
+            </fileset>
+        </copy>
+        <copy todir="${project.dist.dir}/WEB-INF/lib">
+            <fileset dir="${lib.infinispan.root}">
+                <include name="*.jar"/>
+            </fileset>
+        </copy>
+        <copy todir="${project.dist.dir}/WEB-INF/lib">
+            <fileset dir="${lib.jest.root}">
+                <include name="*.jar"/>
+            </fileset>
+        </copy>
+        <copy todir="${project.dist.dir}/WEB-INF/lib">
+            <fileset dir="${lib.freemarker.root}">
+                <include name="*.jar"/>
+            </fileset>
+        </copy>
+
+        <copy todir="${project.dist.dir}/WEB-INF/lib">
+            <fileset dir="${lib.itext.root}">
+                <include name="*.jar"/>
+            </fileset>
+        </copy>
+        <copy todir="${project.dist.dir}/WEB-INF/lib">
+            <fileset dir="${lib.barcode.root}">
+                <include name="*.jar"/>
+            </fileset>
+        </copy>
+
 
     </target>
 
