@@ -39,8 +39,6 @@ public class Role implements Serializable {
 
   private Set<Permission> permissions = new HashSet<Permission>();
 
-  @Transient
-  private boolean selected;
 
   public String getName() {
     return name;
@@ -66,13 +64,7 @@ public class Role implements Serializable {
     this.permissions = permissions;
   }
 
-  public boolean isSelected() {
-    return selected;
-  }
 
-  public void setSelected(boolean selected) {
-    this.selected = selected;
-  }
 
   @Override
   public boolean equals(Object o) {

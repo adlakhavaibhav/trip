@@ -1,6 +1,5 @@
 package com.td.domain.user;
 
-import com.td.domain.core.JSONObject;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.hibernate.annotations.Fetch;
@@ -25,7 +24,7 @@ import java.util.Set;
     @NamedQuery(name = "findUserByEmail", query = "from User u where u.email = :email"),
     @NamedQuery(name = "findByUserEmailAndPassword", query = "from User u where u.email = :email and u.passwordChecksum = :passwordEncrypted"),
     @NamedQuery(name = "findUserById", query = "from User u where u.id = :userId ")})
-public class User extends JSONObject implements Serializable {
+public class User implements Serializable {
 
   @Id
   @Column(name = "id")
@@ -137,6 +136,10 @@ public class User extends JSONObject implements Serializable {
   }
 
 
+  public String getName() {
+    return lname != null ? fname.concat(lname) : fname;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -185,14 +188,5 @@ public class User extends JSONObject implements Serializable {
         .toHashCode();
   }
 
-  @Override
-  protected String[] getKeys() {
-    return new String[]{"id", "email", "fname"};
-  }
-
-  @Override
-  protected Object[] getValues() {
-    return new Object[]{this.id, this.email, this.fname};
-  }
 }
 

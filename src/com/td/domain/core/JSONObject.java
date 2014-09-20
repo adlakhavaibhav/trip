@@ -1,10 +1,20 @@
 package com.td.domain.core;
 
+import com.td.constants.date.DateConstants;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.codec.Base64;
 import org.json.simple.JSONValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -13,9 +23,8 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public abstract class JSONObject implements Serializable, Cloneable {
 
-  /**
-   *
-   */
+  private static Logger logger = LoggerFactory.getLogger(JSONObject.class);
+
   private static final long serialVersionUID = 1036213105972756617L;
 
   public static final String DEFAULT_ENCODING = "UTF-8";
@@ -58,9 +67,9 @@ public abstract class JSONObject implements Serializable, Cloneable {
     } else if (Collection.class.isAssignableFrom(value.getClass())) {
       appendJSONList((Collection) value, strBuilder);
     } else if (value instanceof Date) {
-      Calendar c = Calendar.getInstance();
+      /*Calendar c = Calendar.getInstance();
       c.setTime((Date) value);
-      strBuilder.append("new Date(");
+      strBuilder.append("\"new Date(");
       strBuilder.append(c.get(Calendar.YEAR));
       strBuilder.append(",");
       strBuilder.append((c.get(Calendar.MONTH)));
@@ -70,7 +79,12 @@ public abstract class JSONObject implements Serializable, Cloneable {
       strBuilder.append(c.get(Calendar.HOUR_OF_DAY));
       strBuilder.append(",");
       strBuilder.append(c.get(Calendar.MINUTE));
-      strBuilder.append(",0)");
+      strBuilder.append(",0)\"");*/
+
+      SimpleDateFormat dateFormat = new SimpleDateFormat(DateConstants.DEFAULT_DATE_FORMAT);
+      strBuilder.append("\"");
+      strBuilder.append(dateFormat.format((Date) value));
+      strBuilder.append("\"");
     }
     // else if (value instanceof Double) {
     // return decimalFormat.format(value);
@@ -80,7 +94,27 @@ public abstract class JSONObject implements Serializable, Cloneable {
     } else if (value instanceof JSONObject) {
       strBuilder.append(((JSONObject) value).toJSON());
     } else if (numberClasses.contains(value.getClass())) {
+      //strBuilder.append(Math.round(Double.valueOf(value.toString())));
       strBuilder.append(value.toString());
+    } else if (value instanceof File) {
+      String valueToAppend = null;
+      File file = (File) value;
+      try {
+        FileInputStream fileInputStream = new FileInputStream(file);
+        valueToAppend = new String(Base64.encode(IOUtils.toByteArray(fileInputStream)));
+        /*byte[] bytes = Files.readAllBytes(file.toPath());
+      return new String(Base64.encode(bytes));*/
+      } catch (IOException ioe) {
+        logger.error("Error encountered while parsing file in JSONObject", ioe);
+      }
+
+      if (StringUtils.isNotBlank(valueToAppend)) {
+        strBuilder.append("\"");
+        strBuilder.append(escape(valueToAppend));
+        strBuilder.append("\"");
+      } else {
+        strBuilder.append(valueToAppend);
+      }
     } else {
       //strBuilder.append(net.sf.json.JSONObject.fromObject(value).toString());
       org.json.JSONObject jsonObject = new org.json.JSONObject(value);
@@ -122,14 +156,14 @@ public abstract class JSONObject implements Serializable, Cloneable {
     appendKeyValuePair(getKeys(), getValues(), strBuilder);
   }
 
-  private static void appendKeyValuePair(String[] keys, Object[] values, StringBuilder strBuilder) {
+  private static void appendKeyValuePair(List<String> keys, List<Object> values, StringBuilder strBuilder) {
     strBuilder.append("{");
-    for (int i = 0; i < keys.length; i++) {
+    for (int i = 0; i < keys.size(); i++) {
       strBuilder.append("\"");
-      strBuilder.append(keys[i]);
+      strBuilder.append(keys.get(i));
       strBuilder.append("\":");
-      appendValue(values[i], strBuilder);
-      if (i < keys.length - 1) {
+      appendValue(values.get(i), strBuilder);
+      if (i < keys.size() - 1) {
         strBuilder.append(",");
       }
     }
@@ -138,10 +172,10 @@ public abstract class JSONObject implements Serializable, Cloneable {
 
   public final Map<String, Object> toMap() {
     Map<String, Object> data = new HashMap<String, Object>();
-    String[] keys = getKeys();
-    Object[] values = getValues();
-    for (int i = 0; i < keys.length; i++) {
-      data.put(keys[i], values[i]);
+    List<String> keys = getKeys();
+    List<Object> values = getValues();
+    for (int i = 0; i < keys.size(); i++) {
+      data.put(keys.get(i), values.get(i));
     }
     return data;
   }
@@ -156,9 +190,9 @@ public abstract class JSONObject implements Serializable, Cloneable {
     return strBuilder.toString();
   }
 
-  protected abstract String[] getKeys();
+  protected abstract List<String> getKeys();
 
-  protected abstract Object[] getValues();
+  protected abstract List<Object> getValues();
 
   public static String escape(String input) {
     if (input == null) {
