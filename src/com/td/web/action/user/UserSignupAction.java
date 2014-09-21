@@ -1,6 +1,11 @@
 package com.td.web.action.user;
 
+import com.td.constants.HKWebMessageConstants;
+import com.td.pact.service.auth.LoginService;
+import com.td.rest.request.user.CreateUserRequest;
+import com.td.rest.response.user.CreateUserResponse;
 import com.td.web.action.BaseAction;
+import com.td.web.action.HomeAction;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.validation.SimpleError;
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +22,8 @@ import org.springframework.stereotype.Component;
 public class UserSignupAction extends BaseAction {
 
   private String email;
-  private String name;
+  private String fname;
+  private String lname;
   private String password;
 
   private Long userId;
@@ -26,38 +32,34 @@ public class UserSignupAction extends BaseAction {
   private String redirectUrl;
 
 
-  /*@Autowired
-  private UserService userService;*/
   @Autowired
   private LoginService loginService;
-   /*@Autowired
-   private UserActivationService userActivationService;
-   @Autowired
-   private UserEmailService emailService;*/
 
 
   @DefaultHandler
   @DontValidate
   public Resolution pre() {
-    return new ForwardResolution("/pages/auth/loginResponsive.jsp");
+    return new ForwardResolution("/pages/auth/login.jsp");
   }
 
   public Resolution signup() {
-    if (name == null || email == null || password == null) {
+    if (fname == null || email == null || password == null) {
       addRedirectAlertMessage(new SimpleError(HKWebMessageConstants.EMPTY_CHECK));
-      return new RedirectResolution(SignUpAction.class);
+      return new RedirectResolution(UserSignupAction.class);
     }
     CreateUserRequest createUserRequest = new CreateUserRequest();
     createUserRequest.setEmail(email);
-    createUserRequest.setName(name);
+    createUserRequest.setFname(fname);
+    createUserRequest.setLname(lname);
+
     createUserRequest.setPassword(password);
-    CreateUserApiResponse createUserResponse = getLoginService().signup(createUserRequest);
-    //    CreateUserApiResponse createUserResponse = getUserService().signup(createUserRequest);
+    CreateUserResponse createUserResponse = getLoginService().signupUser(createUserRequest);
+
 
     if (createUserResponse != null) {
       if (createUserResponse.isException()) {
         addRedirectAlertMessage(new SimpleError(createUserResponse.getMessages().get(0)));
-        return new ForwardResolution("/pages/auth/loginResponsive.jsp");
+        return new ForwardResolution("/pages/auth/login.jsp");
         //        return new RedirectResolution(SignUpAction.class);
       }
 
@@ -84,13 +86,6 @@ public class UserSignupAction extends BaseAction {
     this.email = email;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 
   public String getPassword() {
     return password;
@@ -129,12 +124,20 @@ public class UserSignupAction extends BaseAction {
     return loginService;
   }
 
-  public String getPageType() {
-    return pageType;
+
+  public String getFname() {
+    return fname;
   }
 
-  public void setPageType(String pageType) {
-    this.pageType = pageType;
+  public void setFname(String fname) {
+    this.fname = fname;
   }
 
+  public String getLname() {
+    return lname;
+  }
+
+  public void setLname(String lname) {
+    this.lname = lname;
+  }
 }

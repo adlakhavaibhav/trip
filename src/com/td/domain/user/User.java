@@ -181,6 +181,15 @@ public class User implements Serializable {
     this.userHash = userHash;
   }
 
+
+  public Date getCreateDt() {
+    return createDt;
+  }
+
+  public void setCreateDt(Date createDt) {
+    this.createDt = createDt;
+  }
+
   @Override
   public int hashCode() {
     return new HashCodeBuilder()

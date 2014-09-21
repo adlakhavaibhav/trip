@@ -29,8 +29,7 @@ public class UserResponse extends AbstractBaseResponse {
   private Set<String> permissions = new HashSet<String>();
 
 
-
-  public UserResponse(User user, Long storeId) {
+  public UserResponse(User user) {
 
     this.id = user.getId();
 

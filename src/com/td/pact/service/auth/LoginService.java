@@ -1,5 +1,6 @@
 package com.td.pact.service.auth;
 
+import com.td.rest.request.user.CreateUserRequest;
 import com.td.rest.response.user.CreateUserResponse;
 
 /**
@@ -11,5 +12,5 @@ import com.td.rest.response.user.CreateUserResponse;
 public interface LoginService {
 
 
-  public CreateUserResponse signup(CreateUserRequest createUserRequest);
+  public CreateUserResponse signupUser(CreateUserRequest createUserRequest);
 }
