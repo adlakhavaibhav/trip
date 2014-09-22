@@ -34,7 +34,7 @@
 
 
             <div class="span4" style="font-size: 24px;font-weight: bold">
-                TripMD
+                <a href="${pageContext.request.contextPath}/Home.action">TripMD</a>
             </div>
 
             <div class="span8" style="font-size: 13px;">
