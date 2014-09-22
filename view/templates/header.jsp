@@ -54,7 +54,7 @@
                                     <c:when test="<%=isDoctor%>">
                                         <li><a href="${pageContext.request.contextPath}/doctor/DoctorProfile.action">My
                                             (Doc) Profile</a></li>
-                                        <li style="font-size: 13px;width: 30px;">Hi Dr. <shiro:principal
+                                        <li style="font-size: 13px;width: 50px;">Hi Dr. <shiro:principal
                                                 property="firstName"/></li>
                                     </c:when>
                                     <c:otherwise>
