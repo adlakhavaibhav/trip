@@ -30,11 +30,12 @@ public class HomeAction extends BaseAction {
   public Resolution pre() {
 
     Long loggedInUserId = getUserService().getLoggedInUserId();
-    Doctor doc = getDoctorService().getDoctorById(loggedInUserId);
+
     if (loggedInUserId == null) {
       return new ForwardResolution("/pages/auth/home.jsp");
     }
 
+    Doctor doc = getDoctorService().getDoctorById(loggedInUserId);
     if (doc != null) {
       return new RedirectResolution(DoctorProfileAction.class);
     } else {
