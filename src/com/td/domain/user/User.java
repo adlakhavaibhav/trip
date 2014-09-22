@@ -138,7 +138,7 @@ public class User implements Serializable {
 
 
   public String getName() {
-    return lname != null ? fname.concat(lname) : fname;
+    return lname != null ? fname.concat(" " + lname) : fname;
   }
 
   @Override
