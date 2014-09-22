@@ -20,10 +20,11 @@
         <div class="row">
 
             <%
+                boolean isDoctor = false;
                 PrincipalImpl principal = (PrincipalImpl) SecurityUtils.getSubject().getPrincipal();
                 if (principal != null) {
                     pageContext.setAttribute("userId", principal.getId());
-                    System.out.println("em" + principal.getEmail());
+                    isDoctor = principal.isDoctor();
                 } else {
                     pageContext.setAttribute("userId", null);
                 }
@@ -32,27 +33,44 @@
             %>
 
 
-            <div class="span4">
+            <div class="span4" style="font-size: 24px;font-weight: bold">
                 TripMD
             </div>
 
-            <div class="span8">
+            <div class="span8" style="font-size: 13px;">
                 <div class="account pull-right">
                     <ul class="user-menu">
 
                         <c:choose>
                             <c:when test="${userId eq null}">
-                                <li><a href="#">Doctor Login</a></li>
-                                <li><a href='${pageContext.request.contextPath}/user/UserSignup.action'>User Login</a>
+                                <li><a href='${pageContext.request.contextPath}/user/UserSignup.action'>Join as User</a>
                                 </li>
+                                <li><a href='${pageContext.request.contextPath}/doctor/DoctorSignup.action'>Join as
+                                    Doctor</a></li>
+                                <li><a href='${pageContext.request.contextPath}/user/UserLogin.action'>Login</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="#">Doctor Listing</a></li>
-                                <li style="font-size: 13px;">Hi <shiro:principal property="firstName"/></li>
-                                <s:link beanclass="com.td.web.action.auth.LogoutAction">
-                                    <li class="brdr-t">Logout</li>
-                                    <s:param name="redirectUrl" value="/"/>
-                                </s:link>
+                                <c:choose>
+                                    <c:when test="<%=isDoctor%>">
+                                        <li><a href="${pageContext.request.contextPath}/doctor/DoctorProfile.action">My
+                                            (Doc) Profile</a></li>
+                                        <li style="font-size: 13px;width: 30px;">Hi Dr. <shiro:principal
+                                                property="firstName"/></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="${pageContext.request.contextPath}/doctor/DoctorListing.action">Doctor
+                                            Listing</a></li>
+                                        <li style="font-size: 13px;width: 50px;">Hi <shiro:principal
+                                                property="firstName"/></li>
+
+                                    </c:otherwise>
+                                </c:choose>
+                                <li class="brdr-t">
+                                    <s:link beanclass="com.td.web.action.auth.LogoutAction">
+                                        <s:param name="redirectUrl" value="/"/>
+                                        Logout
+                                    </s:link>
+                                </li>
                             </c:otherwise>
                         </c:choose>
                     </ul>

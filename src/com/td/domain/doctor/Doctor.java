@@ -20,10 +20,10 @@ import java.util.Set;
 
 public class Doctor extends User {
 
-  @Column(name = "fname", nullable = false, length = 80)
+  @Column(name = "contact_no", length = 80)
   private String contactNo;
 
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "baseOrder")
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "doctor")
   private Set<DoctorSpeciality> specialities = new HashSet<DoctorSpeciality>();
 
 
@@ -33,5 +33,13 @@ public class Doctor extends User {
 
   public void setContactNo(String contactNo) {
     this.contactNo = contactNo;
+  }
+
+  public Set<DoctorSpeciality> getSpecialities() {
+    return specialities;
+  }
+
+  public void setSpecialities(Set<DoctorSpeciality> specialities) {
+    this.specialities = specialities;
   }
 }

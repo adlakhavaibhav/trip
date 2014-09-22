@@ -15,6 +15,7 @@ import com.td.rest.response.user.UserResponse;
 import com.td.util.BaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class DoctorServiceImpl implements DoctorService {
   private BaseDao baseDao;
 
   @Override
+  @Transactional
   public CreateDoctorResponse signupDoctor(CreateDoctorRequest createDoctorRequest) {
 
     CreateDoctorResponse createDoctorResponse = new CreateDoctorResponse();
@@ -71,8 +73,11 @@ public class DoctorServiceImpl implements DoctorService {
 
     for (Long specialityId : createDoctorRequest.getSpecialityIds()) {
       DoctorSpeciality doctorSpeciality = new DoctorSpeciality();
-      doctorSpeciality.setDoctorId(doctor.getId());
-      doctorSpeciality.setSpecialityId(specialityId);
+      doctorSpeciality.setDoctor(doctor);
+      Speciality speciality = getBaseDao().get(Speciality.class, specialityId);
+
+      //doctorSpeciality.setSpecialityId(specialityId);
+      doctorSpeciality.setSpeciality(speciality);
       getBaseDao().save(doctorSpeciality);
     }
 

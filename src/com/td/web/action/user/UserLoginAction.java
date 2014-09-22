@@ -61,14 +61,7 @@ public class UserLoginAction extends BaseAction {
           return new RedirectResolution(redirectUrl, false);
         }
 
-        Long loggedInUserId = getUserService().getLoggedInUserId();
-        Doctor doc = getDoctorService().getDoctorById(loggedInUserId);
 
-        if (doc != null) {
-          return new RedirectResolution(HomeAction.class);
-        } else {
-          return new RedirectResolution(HomeAction.class);
-        }
 
 
       } else {
@@ -79,7 +72,7 @@ public class UserLoginAction extends BaseAction {
       addRedirectAlertMessage(new SimpleError(HKWebMessageConstants.INVALID_EMAIL_PASSWORD));
       return new ForwardResolution("/pages/auth/login.jsp");
     }
-
+    return new RedirectResolution(HomeAction.class);
 
   }
 

@@ -1,6 +1,9 @@
 package com.td.shiro;
 
+import com.td.domain.doctor.Doctor;
 import com.td.domain.user.User;
+import com.td.impl.service.ServiceLocatorFactory;
+import com.td.pact.service.auth.DoctorService;
 
 /**
  * Created by IntelliJ IDEA.
@@ -61,6 +64,13 @@ public class PrincipalImpl implements Principal {
     this.assumedUserHash = null;
 
     isAssumed = false;
+  }
+
+  public boolean isDoctor() {
+    DoctorService doctorService = ServiceLocatorFactory.getService(DoctorService.class);
+    Doctor doctor = doctorService.getDoctorById(id);
+
+    return doctor != null;
   }
 
   public Long getId() {

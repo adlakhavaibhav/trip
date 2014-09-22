@@ -18,11 +18,13 @@ public class DoctorSpeciality implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(name = "fname", nullable = false)
-  private Long doctorId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "doctor_id", nullable = false)
+  private Doctor doctor;
 
-  @Column(name = "special", nullable = false)
-  private Long specialityId;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "speciality_id", nullable = false)
+  private Speciality speciality;
 
 
   public Long getId() {
@@ -33,19 +35,20 @@ public class DoctorSpeciality implements Serializable {
     this.id = id;
   }
 
-  public Long getDoctorId() {
-    return doctorId;
+  public Doctor getDoctor() {
+    return doctor;
   }
 
-  public void setDoctorId(Long doctorId) {
-    this.doctorId = doctorId;
+  public void setDoctor(Doctor doctor) {
+    this.doctor = doctor;
   }
 
-  public Long getSpecialityId() {
-    return specialityId;
+  public Speciality getSpeciality() {
+
+    return speciality;
   }
 
-  public void setSpecialityId(Long specialityId) {
-    this.specialityId = specialityId;
+  public void setSpeciality(Speciality speciality) {
+    this.speciality = speciality;
   }
 }

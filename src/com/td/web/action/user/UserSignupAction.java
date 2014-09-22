@@ -39,7 +39,7 @@ public class UserSignupAction extends BaseAction {
   @DefaultHandler
   @DontValidate
   public Resolution pre() {
-    return new ForwardResolution("/pages/auth/login.jsp");
+    return new ForwardResolution("/pages/auth/userSignUp.jsp");
   }
 
   public Resolution signup() {
@@ -59,7 +59,7 @@ public class UserSignupAction extends BaseAction {
     if (createUserResponse != null) {
       if (createUserResponse.isException()) {
         addRedirectAlertMessage(new SimpleError(createUserResponse.getMessages().get(0)));
-        return new ForwardResolution("/pages/auth/login.jsp");
+        return new ForwardResolution("/pages/auth/userSignUp.jsp");
         //        return new RedirectResolution(SignUpAction.class);
       }
 
