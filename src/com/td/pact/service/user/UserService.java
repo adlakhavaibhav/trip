@@ -1,5 +1,6 @@
 package com.td.pact.service.user;
 
+import com.td.domain.doctor.Doctor;
 import com.td.domain.user.User;
 
 /**
@@ -10,6 +11,8 @@ import com.td.domain.user.User;
  */
 public interface UserService {
 
+  public Long getLoggedInUserId();
+
   public User getUserByEmail(String email);
 
   public User getUserById(Long userId);
@@ -17,6 +20,8 @@ public interface UserService {
   /*public boolean isTempUser(Long userId, Long storeId);*/
 
   public User saveUser(User user);
+
+  public Doctor saveDoctor(Doctor doctor);
 
   public boolean isValidUserId(Long userId);
 

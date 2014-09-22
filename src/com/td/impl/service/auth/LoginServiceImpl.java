@@ -1,7 +1,7 @@
 package com.td.impl.service.auth;
 
-import com.td.domain.user.Role;
 import com.td.domain.user.User;
+import com.td.exception.LoginException;
 import com.td.pact.service.auth.LoginService;
 import com.td.pact.service.user.UserService;
 import com.td.rest.constants.MessageConstants;
@@ -9,7 +9,9 @@ import com.td.rest.request.user.CreateUserRequest;
 import com.td.rest.response.user.CreateUserResponse;
 import com.td.rest.response.user.UserResponse;
 import com.td.util.BaseUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,40 @@ public class LoginServiceImpl implements LoginService {
   @Autowired
   private UserService userService;
 
+
+  @Override
+  public void logout() {
+    SecurityUtils.getSubject().logout();
+  }
+
+
+  @Override
+  public boolean login(String email, String password, boolean rememberMe) throws LoginException {
+    Long loggedInUserId = getUserService().getLoggedInUserId();
+    /*Long tempUserId = null;
+    if (loggedInUserId != null && getUserService().isTempUser(loggedInUserId)) {
+      tempUserId = loggedInUserId;
+    }*/
+
+    UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(email, password);
+    usernamePasswordToken.setRememberMe(rememberMe);
+    login(usernamePasswordToken);
+
+    loggedInUserId = getUserService().getLoggedInUserId();
+    //onLoginUser(loggedInUserId, tempUserId);
+    return true;
+  }
+
+  private void login(UsernamePasswordToken usernamePasswordToken) throws LoginException {
+    try {
+      SecurityUtils.getSubject().login(usernamePasswordToken);
+      //getSecurityManager().login(null, usernamePasswordToken);
+    } catch (AuthenticationException e) {
+      //logger.error("Unable to login", e);
+      // Note: if the login fails, existing subject is still retained
+      throw new LoginException("Unable to login", e);
+    }
+  }
 
   @Override
   public CreateUserResponse signupUser(CreateUserRequest createUserRequest) {

@@ -18,27 +18,7 @@
         <script src="themes/js/superfish.js"></script>
         <script src="themes/js/jquery.scrolltotop.js"></script>
 
-        <div id="top-bar" class="container">
-            <div class="row">
 
-                <div class="span4">
-                    TripMD
-                </div>
-
-                <div class="span8">
-                    <div class="account pull-right">
-                        <ul class="user-menu">
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Doctor Listing</a></li>
-                            <li><a href="#">Doctor Login</a></li>
-                            <li><a href='${pageContext.request.contextPath}/user/UserSignup.action'>User Login</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
         <div id="wrapper" class="container">
 
 

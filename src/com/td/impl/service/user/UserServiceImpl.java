@@ -1,12 +1,15 @@
 package com.td.impl.service.user;
 
+import com.td.domain.doctor.Doctor;
 import com.td.domain.user.User;
 import com.td.exception.InvalidParameterException;
 import com.td.pact.dao.BaseDao;
 import com.td.pact.service.user.UserService;
+import com.td.shiro.PrincipalImpl;
 import com.td.util.BaseUtils;
 import com.td.util.token.TokenUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,22 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private BaseDao baseDao;
 
+
+  @Override
+  public Long getLoggedInUserId() {
+    try {
+      if (getPrincipal() != null) {
+        return getPrincipal().getId();
+      }
+    } catch (Throwable t) {
+      t.printStackTrace(); //TODO:logger
+    }
+    return null;
+  }
+
+  private PrincipalImpl getPrincipal() {
+    return (PrincipalImpl) SecurityUtils.getSubject().getPrincipal();
+  }
 
   @Override
   public User getUserByEmail(String email) {
@@ -72,6 +91,25 @@ public class UserServiceImpl implements UserService {
     }
 
     return (User) getBaseDao().save(user);
+  }
+
+  @Transactional
+  @Override
+  public Doctor saveDoctor(Doctor doctor) {
+    if (doctor != null) {
+      if (doctor.getCreateDt() == null) {
+        doctor.setCreateDt(BaseUtils.getCurrentTimestamp());
+      }
+      if (doctor.getLastLoginDate() == null) {
+        doctor.setLastLoginDate(BaseUtils.getCurrentTimestamp());
+      }
+      if (StringUtils.isBlank(doctor.getUserHash())) {
+        doctor.setUserHash(TokenUtils.generateUserHash());
+      }
+
+    }
+
+    return (Doctor) getBaseDao().save(doctor);
   }
 
 

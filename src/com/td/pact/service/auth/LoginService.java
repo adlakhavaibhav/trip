@@ -1,5 +1,6 @@
 package com.td.pact.service.auth;
 
+import com.td.exception.LoginException;
 import com.td.rest.request.user.CreateUserRequest;
 import com.td.rest.response.user.CreateUserResponse;
 
@@ -13,4 +14,10 @@ public interface LoginService {
 
 
   public CreateUserResponse signupUser(CreateUserRequest createUserRequest);
+
+  public boolean login(String email, String password, boolean rememberMe) throws LoginException;
+
+
+  public void logout();
+
 }

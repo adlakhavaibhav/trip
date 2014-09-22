@@ -15,7 +15,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
   @Override
   public User findByLogin(String login) {
-    return (User) findUniqueByNamedQueryAndNamedParam("findUserByLogin", new String[]{"login"}, new Object[]{login});
+    return (User) findUniqueByNamedQueryAndNamedParam("findUserByEmail", new String[]{"email"}, new Object[]{login});
   }
 
 

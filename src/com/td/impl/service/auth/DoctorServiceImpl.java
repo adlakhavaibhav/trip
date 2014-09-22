@@ -1,0 +1,103 @@
+package com.td.impl.service.auth;
+
+import com.td.domain.doctor.Doctor;
+import com.td.domain.doctor.DoctorSpeciality;
+import com.td.domain.doctor.Speciality;
+import com.td.domain.user.User;
+import com.td.exception.InvalidParameterException;
+import com.td.pact.dao.BaseDao;
+import com.td.pact.service.auth.DoctorService;
+import com.td.pact.service.user.UserService;
+import com.td.rest.constants.MessageConstants;
+import com.td.rest.request.user.CreateDoctorRequest;
+import com.td.rest.response.doctor.CreateDoctorResponse;
+import com.td.rest.response.user.UserResponse;
+import com.td.util.BaseUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: Vaibhav
+ * Date: 9/22/14
+ * Time: 9:48 AM
+ */
+@Service
+public class DoctorServiceImpl implements DoctorService {
+
+  @Autowired
+  private UserService userService;
+
+  @Autowired
+  private BaseDao baseDao;
+
+  @Override
+  public CreateDoctorResponse signupDoctor(CreateDoctorRequest createDoctorRequest) {
+
+    CreateDoctorResponse createDoctorResponse = new CreateDoctorResponse();
+    if (!createDoctorRequest.validate()) {
+      createDoctorResponse.setException(true);
+      createDoctorResponse.addMessage(MessageConstants.SIGNUP_REQ_INVALID);
+      return createDoctorResponse;
+    }
+
+    if (!BaseUtils.isValidEmail(createDoctorRequest.getEmail())) {
+      createDoctorResponse.setException(true);
+      createDoctorResponse.addMessage(MessageConstants.INVALID_EMAIL);
+      return createDoctorResponse;
+    }
+
+    User user = getUserService().getUserByEmail(createDoctorRequest.getEmail());
+    if (user != null) {
+      createDoctorResponse.setException(true);
+      createDoctorResponse.addMessage(MessageConstants.USER_ID_ALREADY_TAKEN);
+      return createDoctorResponse;
+    }
+
+
+    Doctor doctor = new Doctor();
+    doctor.setFname(createDoctorRequest.getFname());
+    doctor.setLname(createDoctorRequest.getLname());
+
+
+    doctor.setEmail(createDoctorRequest.getEmail());
+    doctor.setPasswordChecksum(BaseUtils.passwordEncrypt(createDoctorRequest.getPassword()));
+
+    doctor = getUserService().saveDoctor(doctor);
+
+    createDoctorResponse.setUserResponse(new UserResponse(doctor));
+
+    for (Long specialityId : createDoctorRequest.getSpecialityIds()) {
+      DoctorSpeciality doctorSpeciality = new DoctorSpeciality();
+      doctorSpeciality.setDoctorId(doctor.getId());
+      doctorSpeciality.setSpecialityId(specialityId);
+      getBaseDao().save(doctorSpeciality);
+    }
+
+    return createDoctorResponse;
+  }
+
+  @Override
+  public Doctor getDoctorById(Long doctorId) {
+    if (doctorId == null) {
+      throw new InvalidParameterException("DOC_ID_CANNOT_BE_NULL");
+    }
+
+    return (Doctor) getBaseDao().findUniqueByNamedQueryAndNamedParam("findDoctorById", new String[]{"doctorId"}, new Object[]{doctorId});
+  }
+
+  @Override
+  public List<Speciality> getAllSpecialities() {
+    return getBaseDao().getAll(Speciality.class);
+  }
+
+  public UserService getUserService() {
+    return userService;
+  }
+
+  public BaseDao getBaseDao() {
+    return baseDao;
+  }
+}

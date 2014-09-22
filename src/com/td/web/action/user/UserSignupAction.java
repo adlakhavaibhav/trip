@@ -63,17 +63,18 @@ public class UserSignupAction extends BaseAction {
         //        return new RedirectResolution(SignUpAction.class);
       }
 
-       /*getLoginService().login(createUserResponse.getUserResponse().getLogin(), createUserRequest.getPassword(), true);
+         /*getLoginService().login(createUserResponse.getUserResponse().getLogin(), createUserRequest.getPassword(), true);
 
-       if (!createUserResponse.isActivated()) {
-         String activateLink = getUserActivationService().getActivationLink(createUserResponse.getActivationTokenResponse().getToken(), createUserResponse.getUserResponse().getId());
-         getEmailService().sendWelcomeEmail(createUserResponse.getUserResponse(), activateLink);
-       }*/
+         if (!createUserResponse.isActivated()) {
+           String activateLink = getUserActivationService().getActivationLink(createUserResponse.getActivationTokenResponse().getToken(), createUserResponse.getUserResponse().getId());
+           getEmailService().sendWelcomeEmail(createUserResponse.getUserResponse(), activateLink);
+         }*/
 
       if (!StringUtils.isBlank(redirectUrl)) {
         return new RedirectResolution(redirectUrl, false);
       }
     }
+    getLoginService().login(createUserRequest.getEmail(), createUserRequest.getPassword(), true);
     return new RedirectResolution(HomeAction.class);
   }
 

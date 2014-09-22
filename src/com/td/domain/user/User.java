@@ -24,6 +24,7 @@ import java.util.Set;
     @NamedQuery(name = "findUserByEmail", query = "from User u where u.email = :email"),
     @NamedQuery(name = "findByUserEmailAndPassword", query = "from User u where u.email = :email and u.passwordChecksum = :passwordEncrypted"),
     @NamedQuery(name = "findUserById", query = "from User u where u.id = :userId ")})
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Serializable {
 
   @Id
