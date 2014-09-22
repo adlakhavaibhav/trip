@@ -21,7 +21,8 @@
                         </div>
                         <div class="span6">
                             <h5> Dr. ${doctor.name} </h5>
-
+                            14 years experience
+                            <br/>
                             Specialities:
                             <c:forEach items="${doctor.specialities}" var="speciality">
 
@@ -31,9 +32,9 @@
 
                         </div>
                         <div class="span4 pull-right" style="margin-right: 40px;text-align: center">
-                            Rs. 400
+                            <span style="font-weight: bold;font-size: 13px;margin-bottom: 15px;">Rs. 400</span>
                             <br/>
-                            <button class="btn btn-inverse">Book an appointment</button>
+                            <button class="btn btn-primary">Book an appointment</button>
                         </div>
 
 

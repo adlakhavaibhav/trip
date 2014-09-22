@@ -18,77 +18,78 @@
 	<context:component-scan base-package="com.td" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
+
     <bean id="serviceLocatorFactory"
-        		class="com.td.impl.service.ServiceLocatorFactory" />
-        	<bean id="transactionProxyFactoryBean"
-        		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
-        		abstract="true">
-        		<property name="transactionManager">
-        			<ref bean="transactionManager" />
-        		</property>
-        	</bean>
-        	<bean id="transactionTemplate"
-        		class="org.springframework.transaction.support.TransactionTemplate"
-        		lazy-init="true">
-        		<property name="transactionManager">
-        			<ref bean="transactionManager" />
-        		</property>
-        	</bean>
-        	<bean id="transactionManager"
-        		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        		<property name="sessionFactory">
-        			<ref bean="sessionFactory" />
-        		</property>
-        		<property name="nestedTransactionAllowed" value="true" />
-        	</bean>
+           		class="com.td.impl.service.ServiceLocatorFactory" />
+           	<bean id="transactionProxyFactoryBean"
+           		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+           		abstract="true">
+           		<property name="transactionManager">
+           			<ref bean="transactionManager" />
+           		</property>
+           	</bean>
+           	<bean id="transactionTemplate"
+           		class="org.springframework.transaction.support.TransactionTemplate"
+           		lazy-init="true">
+           		<property name="transactionManager">
+           			<ref bean="transactionManager" />
+           		</property>
+           	</bean>
+           	<bean id="transactionManager"
+           		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+           		<property name="sessionFactory">
+           			<ref bean="sessionFactory" />
+           		</property>
+           		<property name="nestedTransactionAllowed" value="true" />
+           	</bean>
 
 
 
 
-            <!-- =========================================================
-                 Shiro Core Components - Not Spring Specific
-                 ========================================================= -->
-            <!-- Shiro's main business-tier object for web-enabled applications
-                 (use DefaultSecurityManager instead when there is no web environment)-->
+               <!-- =========================================================
+                    Shiro Core Components - Not Spring Specific
+                    ========================================================= -->
+               <!-- Shiro's main business-tier object for web-enabled applications
+                    (use DefaultSecurityManager instead when there is no web environment)-->
 
 
 
-            <!-- Used by the SecurityManager to access security data (users, roles, etc).
-                 Many other realm implementations can be used too (PropertiesRealm,
-                 LdapRealm, etc. -->
-           <!-- <bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
-                <property name="dataSource" ref="dataSource"/>
-            </bean>-->
+               <!-- Used by the SecurityManager to access security data (users, roles, etc).
+                    Many other realm implementations can be used too (PropertiesRealm,
+                    LdapRealm, etc. -->
+              <!-- <bean id="jdbcRealm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
+                   <property name="dataSource" ref="dataSource"/>
+               </bean>-->
 
-             <bean id="jdbcRealm" class="com.td.shiro.HibernateSecurityRealm">
-           </bean>
+                <bean id="jdbcRealm" class="com.td.shiro.HibernateSecurityRealm">
+              </bean>
 
-            <bean id="securityManager" class="com.td.shiro.ShiroSecurityManager">
-                <property name="realm" ref="jdbcRealm" />
-                <property name="sessionMode" value="http" />
-            </bean>
+               <bean id="securityManager" class="com.td.shiro.ShiroSecurityManager">
+                   <property name="realm" ref="jdbcRealm" />
+                   <property name="sessionMode" value="http" />
+               </bean>
 
-            <!-- =========================================================
-                 Shiro Spring-specific integration
-                 ========================================================= -->
-            <!-- Post processor that automatically invokes init() and destroy() methods
-                 for Spring-configured Shiro objects so you don't have to
-                 1) specify an init-method and destroy-method attributes for every bean
-                    definition and
-                 2) even know which Shiro objects require these methods to be
-                    called. -->
-           <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+               <!-- =========================================================
+                    Shiro Spring-specific integration
+                    ========================================================= -->
+               <!-- Post processor that automatically invokes init() and destroy() methods
+                    for Spring-configured Shiro objects so you don't have to
+                    1) specify an init-method and destroy-method attributes for every bean
+                       definition and
+                    2) even know which Shiro objects require these methods to be
+                       called. -->
+              <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
-            <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after
-                 the lifecycleBeanProcessor has run: -->
-            <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-                  depends-on="lifecycleBeanPostProcessor"/>
-            <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-                <property name="securityManager" ref="securityManager"/>
-            </bean>
+               <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after
+                    the lifecycleBeanProcessor has run: -->
+               <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+                     depends-on="lifecycleBeanPostProcessor"/>
+               <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+                   <property name="securityManager" ref="securityManager"/>
+               </bean>
 
 
 
-    <!--    <util:properties id="hkEnvProps" location="/WEB-INF/environment.properties" />-->
+       <!--    <util:properties id="hkEnvProps" location="/WEB-INF/environment.properties" />-->
 
 </beans>
