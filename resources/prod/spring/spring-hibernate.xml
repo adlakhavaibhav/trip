@@ -1,89 +1,90 @@
 <?xml version="1.0" ?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
-	"http://www.springframework.org/dtd/spring-beans.dtd">
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
 
-	<bean id="lobHandler"
-		class="org.springframework.jdbc.support.lob.DefaultLobHandler" />
+    <bean id="lobHandler"
+          class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>
 
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 
-		<property name="dataSource">
-			<ref bean="dataSource" />
-		</property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
 
-		<property name="lobHandler">
-			<ref bean="lobHandler" />
-		</property>
-	
-		<property name="packagesToScan">
-			<list>
-				<value>com.td.domain</value>
-			</list>
-		</property>
+        <property name="lobHandler">
+            <ref bean="lobHandler"/>
+        </property>
 
-		<property name="entityInterceptor">
-			<ref local="defaultHibernateInterceptor" />
-		</property>
+        <property name="packagesToScan">
+            <list>
+                <value>com.td.domain</value>
+            </list>
+        </property>
 
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">
-					org.hibernate.dialect.MySQL5InnoDBDialect
-				</prop>
-				<prop key="hibernate.show_sql">false</prop>
-				<prop key="hibernate.connection.release_mode">
-					on_close
-				</prop>
-				<prop key="hibernate.connection.isolation">2</prop>
-				<prop
-					key="hibernate.bytecode.use_reflection_optimizer">
-					true
-				</prop>
-			</props>
-		</property>
-	</bean>
+        <property name="entityInterceptor">
+            <ref local="defaultHibernateInterceptor"/>
+        </property>
 
-
-	<bean id="hibernateTemplate"
-		class="org.springframework.orm.hibernate3.HibernateTemplate">
-		<property name="sessionFactory">
-			<ref bean="sessionFactory" />
-		</property>
-	</bean>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQL5InnoDBDialect
+                </prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.connection.release_mode">
+                    on_close
+                </prop>
+                <prop key="hibernate.connection.isolation">2</prop>
+                <prop
+                        key="hibernate.bytecode.use_reflection_optimizer">
+                    true
+                </prop>
+            </props>
+        </property>
+    </bean>
 
 
-	<bean id="dataSource"
-		class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName">
-			<value>com.mysql.jdbc.Driver</value>
-		</property>
-		<property name="url">
-			<value>jdbc:mysql://localhost:3306/trip</value>
-		</property>
-		<property name="username">
-			<value>root</value>
-		</property>
-		<property name="password">
-			<value>root</value>
-		</property>
-		<property name="removeAbandoned">
-			<value>true</value>
-		</property>
-		<property name="removeAbandonedTimeout">
-			<value>30</value>
-		</property>
-		<property name="maxIdle">
-			<value>20</value>
-		</property>
-		<property name="initialSize">
-			<value>50</value>
-		</property>
-	</bean>
+    <bean id="hibernateTemplate"
+          class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"/>
+        </property>
+    </bean>
 
-	<bean id="defaultHibernateInterceptor"
-		class="org.hibernate.EmptyInterceptor" />
+
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName">
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:mysql://localhost:3306/trip</value>
+        </property>
+        <property name="username">
+            <value>root</value>
+        </property>
+        <property name="password">
+            <value>root</value>
+        </property>
+        <property name="maxActive" value="200"/>
+        <property name="maxWait" value="15000"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="300"/>
+        <property name="validationQuery">
+            <value>SELECT 1</value>
+        </property>
+        <property name="testOnBorrow" value="true"/>
+        <property name="maxIdle" value="20"/>
+        <property name="logAbandoned" value="true"/>
+        <property name="initialSize" value="50"/>
+        <property name="timeBetweenEvictionRunsMillis" value="10000"/>
+        <property name="minEvictableIdleTimeMillis" value="180000"/>
+    </bean>
+
+    <bean id="defaultHibernateInterceptor"
+          class="org.hibernate.EmptyInterceptor"/>
 
 </beans>
