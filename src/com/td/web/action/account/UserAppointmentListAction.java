@@ -55,7 +55,9 @@ public class UserAppointmentListAction extends BasePaginatedAction {
       userAppointmentsPage = new Page(userAppointmens, getPerPage(), getPageNo(), userAppointmens.size());
     }
 
-    userAppointmentList = userAppointmentsPage.getList();
+    if (userAppointmentsPage != null) {
+      userAppointmentList = userAppointmentsPage.getList();
+    }
     return new ForwardResolution("/pages/account/user/userAppointments.jsp");
   }
 
