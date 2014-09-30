@@ -64,23 +64,28 @@ public class AppointmentServiceImpl implements AppointmentService {
   @Override
   @SuppressWarnings("unchecked")
   public List<AppointmentDTO> getAppointmentsForDoctor(Long doctorId) {
-    List<Appointment> doctorAppointments = (List<Appointment>) getBaseDao().findUniqueByNamedQueryAndNamedParam("getAppointmentsForDoctor", new String[]{"doctorId"}, new Object[]{doctorId});
+    List<Appointment> doctorAppointments = (List<Appointment>) getBaseDao().findByNamedQueryAndNamedParam("getAppointmentsForDoctor", new String[]{"doctorId"}, new Object[]{doctorId});
 
     List<AppointmentDTO> results = new ArrayList<AppointmentDTO>();
-    for (Appointment appointment : doctorAppointments) {
-      results.add(new AppointmentDTO(appointment));
+    if (doctorAppointments != null) {
+      for (Appointment appointment : doctorAppointments) {
+        results.add(new AppointmentDTO(appointment));
+      }
     }
 
     return results;
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public List<AppointmentDTO> getAppointmentsForUser(Long userId) {
-    List<Appointment> doctorAppointments = (List<Appointment>) getBaseDao().findUniqueByNamedQueryAndNamedParam("getAppointmentsForUser", new String[]{"userId"}, new Object[]{userId});
+    List<Appointment> doctorAppointments = (List<Appointment>) getBaseDao().findByNamedQueryAndNamedParam("getAppointmentsForUser", new String[]{"userId"}, new Object[]{userId});
 
     List<AppointmentDTO> results = new ArrayList<AppointmentDTO>();
-    for (Appointment appointment : doctorAppointments) {
-      results.add(new AppointmentDTO(appointment));
+    if (doctorAppointments != null) {
+      for (Appointment appointment : doctorAppointments) {
+        results.add(new AppointmentDTO(appointment));
+      }
     }
 
     return results;

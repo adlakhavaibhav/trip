@@ -85,6 +85,8 @@
                         <c:when test="<%=isDoctor%>">
                             <li><a href="${pageContext.request.contextPath}/doctor/DoctorProfile.action">My
                                 (Doc) Profile</a></li>
+                            <li><a href="${pageContext.request.contextPath}/account/DoctorAppointmentList.action">My
+                                Appointments</a></li>
                             <li><a href="${pageContext.request.contextPath}/auth/Logout.action">Hi Dr.<shiro:principal
                                     property="firstName"/> (Logout)</a></li>
                         </c:when>
@@ -93,6 +95,8 @@
                                 Listing</a></li>
                             <li><a href="${pageContext.request.contextPath}/doctor/DoctorSearch.action">Doctor
                                 Search</a></li>
+                            <li><a href="${pageContext.request.contextPath}/account/UserAppointmentList.action">My
+                                Appointments</a></li>
                             <li><a href="${pageContext.request.contextPath}/auth/Logout.action">Hi <shiro:principal
                                     property="firstName"/> (Logout)</a></li>
 

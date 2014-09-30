@@ -21,9 +21,13 @@ public class AppointmentDTO {
   private String doctorName;
 
   private String status;
+  private int statusId;
 
   private Date appointmentDate;
   private String appointmentTime;
+
+  private boolean userCancel;
+  private boolean docCancel;
 
 
   public AppointmentDTO() {
@@ -40,6 +44,41 @@ public class AppointmentDTO {
     this.appointmentDate = appointment.getAppointmentDate();
     this.appointmentTime = appointment.getAppointmentTime();
     this.status = EnumAppointmentStatus.getEnumAppointmentStatusById(appointment.getStatus()).getName();
+    this.statusId = appointment.getStatus();
+    this.userCancel = (statusId == EnumAppointmentStatus.PENDING_CONFRIMATION.getId() || statusId == EnumAppointmentStatus.CONFIRMED.getId());
+    this.docCancel = (statusId == EnumAppointmentStatus.PENDING_CONFRIMATION.getId() || statusId == EnumAppointmentStatus.CONFIRMED.getId());
+
+  }
+
+
+  public boolean isUserCancel() {
+    return userCancel;
+  }
+
+  public boolean getDocCancel() {
+    return docCancel;
+  }
+
+  public void setDocCancel(boolean docCancel) {
+    this.docCancel = docCancel;
+  }
+
+  public boolean getUserCancel() {
+
+    return userCancel;
+  }
+
+  public void setUserCancel(boolean userCancel) {
+    this.userCancel = userCancel;
+  }
+
+
+  public int getStatusId() {
+    return statusId;
+  }
+
+  public void setStatusId(int statusId) {
+    this.statusId = statusId;
   }
 
   public String getUserName() {

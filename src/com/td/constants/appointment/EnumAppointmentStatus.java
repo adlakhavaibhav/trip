@@ -10,11 +10,11 @@ public enum EnumAppointmentStatus {
 
   PENDING_CONFRIMATION(10, "Pending Confirmation"),
 
-  CONFIRMED(20, "In Process"),
+  CONFIRMED(20, "Confirmed"),
 
-  ATTENDED(30, "Ready To Ship"),
+  ATTENDED(30, "Attended"),
 
-  CANCELLED(30, "Shipped");
+  CANCELLED(40, "Cancelled");
 
   private int id;
   private String name;

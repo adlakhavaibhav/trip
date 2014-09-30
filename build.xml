@@ -31,6 +31,9 @@
     </target>
 
     <target name="collect-resources">
+        <copy todir="${project.dist.dir}/images">
+            <fileset dir="${project.view.dir}/assets/images/"/>
+        </copy>
         <copy todir="${project.dist.dir}/WEB-INF/classes/spring">
             <fileset dir="${project.resources.dir}/${project.env}/spring"/>
         </copy>

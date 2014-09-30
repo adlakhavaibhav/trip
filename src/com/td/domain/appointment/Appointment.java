@@ -14,8 +14,8 @@ import java.util.Date;
  * Time: 10:28 AM
  */
 @NamedQueries({
-    @NamedQuery(name = "getAppointmentsForDoctor", query = "from Appointment a where a.doctor.id = :doctorId "),
-    @NamedQuery(name = "getAppointmentsForUser", query = "from Appointment a where a.user.id = :userId ")
+    @NamedQuery(name = "getAppointmentsForDoctor", query = "from Appointment a where a.doctor.id = :doctorId order by  appointmentDate desc "),
+    @NamedQuery(name = "getAppointmentsForUser", query = "from Appointment a where a.user.id = :userId order by  a.appointmentDate desc ")
 })
 
 @Entity

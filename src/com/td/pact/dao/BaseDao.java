@@ -142,6 +142,8 @@ public interface BaseDao {
    */
   public List findByNamedQuery(String namedQuery);
 
+  public List findByNamedQueryAndNamedParam(String queryString, String[] paramNames, Object[] paramValues);
+
   /**
    * @param object
    * @return

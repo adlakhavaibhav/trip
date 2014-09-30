@@ -21,7 +21,7 @@
                             <div class="col_4">
                                 <s:label name="Date And Time For Your Visit"/>
                                 <s:text name="dateTimeOfVisit" id="dateTimeOfVisit"/>
-                                <s:text name="doctorId" id="doctorId" value="${bookAppointmentAction.doctorId}"/>
+                                <s:hidden name="doctorId" id="doctorId" value="${bookAppointmentAction.doctorId}"/>
                             </div>
 
                             <div class="col_2">

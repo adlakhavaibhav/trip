@@ -138,6 +138,10 @@ public class BaseDaoImpl extends HibernateDaoSupport implements BaseDao {
     return getHibernateTemplate().findByNamedQuery(namedQuery);
   }
 
+  public List findByNamedQueryAndNamedParam(String queryString, String[] paramNames, Object[] paramValues) {
+    return getHibernateTemplate().findByNamedQueryAndNamedParam(queryString, paramNames, paramValues);
+  }
+
   @SuppressWarnings("unchecked")
   public List findByCriteria(DetachedCriteria criteria) throws DataAccessException {
     return getHibernateTemplate().findByCriteria(criteria);

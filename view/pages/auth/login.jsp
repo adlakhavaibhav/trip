@@ -13,9 +13,9 @@
         <section class="main-content">
             <div class="row">
                 <div class="span12 center">
-                    <s:form id="loginForm" beanclass="com.td.web.action.user.UserLoginAction" class="form-stacked">
+                    <s:form id="loginForm"  beanclass="com.td.web.action.user.UserLoginAction" class="form-stacked">
 
-                        <fieldset>
+                        <fieldset style="padding: 20px;">
                             <div class="control-group">
                                 <%--<label class="control-label">Email</label>--%>
 
@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="control-group">
-                                <s:submit name="login" tabindex="3" class="btn btn-inverse large"
+                                <s:submit name="login" tabindex="3" class="button blue large" style="padding:8px;"
                                           value="Sign into your account"/>
                                 <hr>
                                 <p class="reset">Recover your <a tabindex="4" href="#"

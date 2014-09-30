@@ -6,60 +6,35 @@
 
         <s:useActionBean beanclass="com.td.web.action.doctor.DoctorProfileAction" var="doctorProfile"/>
         <div class="content-outer wrap">
-            <section class="header_text sub">
-                <h4><span>Dr. ${doctorProfile.doctor.fname}'s profile</span></h4>
-            </section>
 
-            <section class="main-content">
-                <div class="row">
-                    <div class="span7">
-                        <form id="test" class="form-horizontal">
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label">Email address:</label>
+            <div class="col_12">
+                <div id="page-heading">
+                    <h4>Dr. ${doctorProfile.doctor.fname}'s profile</h4>
+                </div>
 
-                                    <div class="controls">
-                                            ${doctorProfile.doctor.email}
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">Specialities (select multiple):</label>
+                <div class="well">
+                    <div class="col_3">
+                        <span>Email address: ${doctorProfile.doctor.email}</span>
+                    </div>
+                    <div class="col_3">
+                        <span>Name: ${doctorProfile.doctor.name}</span>
+                    </div>
 
-                                    <div class="controls">
-                                        <c:forEach items="${doctorProfile.doctor.specialities}" var="speciality"
-                                                   varStatus="cacheDTOctr">
-                                            ${speciality.speciality.name}, ${speciality.speciality.desc}
-                                            <br/>
-                                        </c:forEach>
+                    <div class="col_6">
+                        <span>Specialities (select multiple):</span>
+                        <c:forEach items="${doctorProfile.doctor.specialities}" var="speciality"
+                                   varStatus="cacheDTOctr">
+                            ${speciality.speciality.name}, ${speciality.speciality.desc}
 
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label">First Name:</label>
+                        </c:forEach>
 
-                                    <div class="controls">
-                                            ${doctorProfile.doctor.fname}
-                                    </div>
-                                </div>
-
-                                <div class="control-group">
-                                    <label class="control-label">Last Name:</label>
-
-                                    <div class="controls">
-                                            ${doctorProfile.doctor.lname}
-                                    </div>
-                                </div>
-
-
-                                <hr>
-
-                            </fieldset>
-                        </form>
                     </div>
                 </div>
-            </section>
-        </div>
 
+                <div class="clear"></div>
+                Clinic Details Coming Soon !
+            </div>
+        </div>
 
     </s:layout-component>
 

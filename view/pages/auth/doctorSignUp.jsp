@@ -66,7 +66,7 @@
 
                             <hr>
                             <div class="actions">
-                                <s:submit name="signup" tabindex="9" class="btn btn-inverse large"
+                                <s:submit name="signup" tabindex="9" class="button blue large" style="padding:8px;"
                                           value="Create your account"/>
 
                             </div>
