@@ -5,7 +5,7 @@
     <s:layout-component name="content">
 
         <s:useActionBean beanclass="com.td.web.action.doctor.DoctorProfileAction" var="doctorProfile"/>
-        <div id="wrapper" class="container">
+        <div class="content-outer wrap">
             <section class="header_text sub">
                 <h4><span>Dr. ${doctorProfile.doctor.fname}'s profile</span></h4>
             </section>

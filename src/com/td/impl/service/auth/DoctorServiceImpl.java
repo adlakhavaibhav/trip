@@ -6,13 +6,17 @@ import com.td.domain.doctor.Speciality;
 import com.td.domain.user.User;
 import com.td.exception.InvalidParameterException;
 import com.td.pact.dao.BaseDao;
+import com.td.pact.query.impl.DoctorBySpecialitySearchQuery;
+import com.td.pact.query.impl.DoctorSearchQuery;
 import com.td.pact.service.auth.DoctorService;
+import com.td.pact.service.core.SearchService;
 import com.td.pact.service.user.UserService;
 import com.td.rest.constants.MessageConstants;
 import com.td.rest.request.user.CreateDoctorRequest;
 import com.td.rest.response.doctor.CreateDoctorResponse;
 import com.td.rest.response.user.UserResponse;
 import com.td.util.BaseUtils;
+import com.td.web.action.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +34,9 @@ public class DoctorServiceImpl implements DoctorService {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private SearchService searchService;
 
   @Autowired
   private BaseDao baseDao;
@@ -98,11 +105,43 @@ public class DoctorServiceImpl implements DoctorService {
     return getBaseDao().getAll(Speciality.class);
   }
 
+  @Override
+  public Page searchDoctors(String doctorName, int pageNo, int perPage) {
+
+    DoctorSearchQuery doctorSearchQuery = new DoctorSearchQuery();
+    doctorSearchQuery.setOrderByField("id");
+    doctorSearchQuery.setDoctorName(doctorName);
+
+    doctorSearchQuery.setOrderByField("id")
+        .setPageNo(pageNo)
+        .setRows(perPage);
+
+    return getSearchService().list(doctorSearchQuery);
+  }
+
+  @Override
+  public Page searchDoctors(String doctorName, Long specialityId, int pageNo, int perPage) {
+
+    DoctorBySpecialitySearchQuery doctorBySpecialitySearchQuery = new DoctorBySpecialitySearchQuery();
+    doctorBySpecialitySearchQuery.setOrderByField("id");
+    doctorBySpecialitySearchQuery.setSpecialityId(specialityId);
+
+    doctorBySpecialitySearchQuery.setOrderByField("id")
+        .setPageNo(pageNo)
+        .setRows(perPage);
+
+    return getSearchService().list(doctorBySpecialitySearchQuery);
+  }
+
   public UserService getUserService() {
     return userService;
   }
 
   public BaseDao getBaseDao() {
     return baseDao;
+  }
+
+  public SearchService getSearchService() {
+    return searchService;
   }
 }

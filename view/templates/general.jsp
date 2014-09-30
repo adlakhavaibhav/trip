@@ -11,7 +11,7 @@
 
 
     </head>
-    <body style="background-color:#415252">
+    <body>
     <s:layout-component name="modal"/>
 
 
