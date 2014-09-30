@@ -51,7 +51,7 @@
                                             Cancel Appointment
                                         </s:link>
                                         <s:link beanclass="com.td.web.action.account.DoctorAppointmentListAction"
-                                                event="updateAppointmentStatus" class="button small blue"
+                                                event="updateAppointmentStatus" class="button small green"
                                                 style="padding:8px;">
                                             <s:param name="appointmentId" value="${userAppointment.id}"/>
                                             <s:param name="appStatus"
