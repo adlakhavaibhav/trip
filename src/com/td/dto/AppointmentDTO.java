@@ -28,6 +28,7 @@ public class AppointmentDTO {
 
   private boolean userCancel;
   private boolean docCancel;
+  private boolean docConfirm;
 
 
   public AppointmentDTO() {
@@ -47,9 +48,21 @@ public class AppointmentDTO {
     this.statusId = appointment.getStatus();
     this.userCancel = (statusId == EnumAppointmentStatus.PENDING_CONFRIMATION.getId() || statusId == EnumAppointmentStatus.CONFIRMED.getId());
     this.docCancel = (statusId == EnumAppointmentStatus.PENDING_CONFRIMATION.getId() || statusId == EnumAppointmentStatus.CONFIRMED.getId());
+    this.docConfirm = (statusId == EnumAppointmentStatus.PENDING_CONFRIMATION.getId());
 
   }
 
+  public boolean isDocCancel() {
+    return docCancel;
+  }
+
+  public boolean getDocConfirm() {
+    return docConfirm;
+  }
+
+  public void setDocConfirm(boolean docConfirm) {
+    this.docConfirm = docConfirm;
+  }
 
   public boolean isUserCancel() {
     return userCancel;

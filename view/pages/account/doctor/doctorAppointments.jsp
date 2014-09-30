@@ -50,6 +50,8 @@
                                                      value="<%=EnumAppointmentStatus.CANCELLED.getId()%>"/>
                                             Cancel Appointment
                                         </s:link>
+                                    </c:if>
+                                    <c:if test="${userAppointment.docConfirm}">
                                         <s:link beanclass="com.td.web.action.account.DoctorAppointmentListAction"
                                                 event="updateAppointmentStatus" class="button small green"
                                                 style="padding:8px;">
