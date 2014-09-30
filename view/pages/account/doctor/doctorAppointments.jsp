@@ -46,8 +46,17 @@
                                                 event="updateAppointmentStatus" class="button small blue"
                                                 style="padding:8px;">
                                             <s:param name="appointmentId" value="${userAppointment.id}"/>
-                                            <s:param name="appStatus" value="<%=EnumAppointmentStatus.CANCELLED.getId()%>"/>
+                                            <s:param name="appStatus"
+                                                     value="<%=EnumAppointmentStatus.CANCELLED.getId()%>"/>
                                             Cancel Appointment
+                                        </s:link>
+                                        <s:link beanclass="com.td.web.action.account.DoctorAppointmentListAction"
+                                                event="updateAppointmentStatus" class="button small blue"
+                                                style="padding:8px;">
+                                            <s:param name="appointmentId" value="${userAppointment.id}"/>
+                                            <s:param name="appStatus"
+                                                     value="<%=EnumAppointmentStatus.CONFIRMED.getId()%>"/>
+                                            Confirm Appointment
                                         </s:link>
                                     </c:if>
                                 </td>
