@@ -18,33 +18,24 @@
       TripMD
     </title>
     <s:layout-component name="htmlHead"/>
-      <%--<link href="../assets/css/grid.css" rel="stylesheet" type="text/css"/>--%>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/screen.css" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/kickstart.css"
           media="all"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/chosen.css"
           media="all"/>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/assets/css/jquery.ui.autocomplete.css"
-          media="all"/>
+
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/jquery.ui.theme.css"
           media="all"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/style.css?v=1.1"
           media="all"/>
-    <!-- CUSTOM STYLES -->
-      <%--<link href="../assets/css/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css"/>--%>
-
-      <%--<link href="../assets/css/admin.css" rel="stylesheet" type="text/css"/>--%>
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/assets/js/jquery-ui-1.8.21.custom.min.js"></script>
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/prettify.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/underscore-1.3.1.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/kickstart.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/hkCommon.js?v=1.1"></script>
+
 
   </head>
   <body>

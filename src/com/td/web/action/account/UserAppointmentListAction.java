@@ -52,6 +52,7 @@ public class UserAppointmentListAction extends BasePaginatedAction {
   public Resolution pre() {
     List<AppointmentDTO> userAppointmens = getAppointmentService().getAppointmentsForUser(getUserService().getLoggedInUserId());
     if (userAppointmens != null && userAppointmens.size() > 0) {
+      //Page(results, searchQuery.getRows(), searchQuery.getPageNo(), count);
       userAppointmentsPage = new Page(userAppointmens, getPerPage(), getPageNo(), userAppointmens.size());
     }
 
