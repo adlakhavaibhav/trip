@@ -28,7 +28,7 @@
 
 
                             <div class="col_2">
-                                <s:submit name="searchStoreVariants" style="margin: 5px; margin-top:10px;"
+                                <s:submit name="searchDoctors" style="margin: 5px; margin-top:10px;"
                                           class="button blue small search">Search</s:submit>
                             </div>
                         </s:form>
@@ -58,10 +58,15 @@
                                 </c:forEach>
 
                             </div>
-                            <div class="col_4">
+                            <div class="col_4 gallery">
                                 <span style="font-weight: bold;font-size: 13px;margin-bottom: 15px;">Rs. 400</span>
                                 <br/>
-                                <button class="button orange">Book an appointment</button>
+                                <s:link beanclass="com.td.web.action.appointment.BookAppointmentAction"
+                                        event="pre" class="button orange fancy" style="padding:8px;">
+                                    <s:param name="doctorId" value="${doctor.id}"/>
+                                    Book an appointment
+                                </s:link>
+                                    <%--<button class="button orange">Book an appointment</button>--%>
                             </div>
 
 

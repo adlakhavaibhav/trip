@@ -39,6 +39,15 @@ public class DoctorProfileAction extends BaseAction {
   }
 
 
+  public Resolution editProfile() {
+    Long doctorId = getUserService().getLoggedInUserId();
+    doctor = getDoctorService().getDoctorById(doctorId);
+
+    return new ForwardResolution("/pages/auth/doctorProfileEdit.jsp");
+
+  }
+
+
   public Doctor getDoctor() {
     return doctor;
   }

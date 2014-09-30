@@ -63,7 +63,7 @@ public class DoctorSearchAction extends BasePaginatedAction {
   }
 
   @SuppressWarnings("unchecked")
-  public Resolution searchStoreVariants() {
+  public Resolution searchDoctors() {
     if (pageNum != null) {
       setPageNo(pageNum.intValue());
     }
